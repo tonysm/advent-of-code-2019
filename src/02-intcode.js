@@ -25,6 +25,25 @@ const intCodeComputer = (codes) => {
     return codes;
 };
 
+const calculateIntCodeNounAndVerbForValue = (initialCodes, testOutput) => {
+    for (let noun = 0; noun <= 99; noun++) {
+        for (let verb = 0; verb <= 99; verb++) {
+            let codes = [...initialCodes];
+            codes[1] = noun;
+            codes[2] = verb;
+
+            const result = intCodeComputer(codes);
+
+            if (result[0] === testOutput) {
+                return { noun, verb };
+            }
+        }
+    }
+
+    throw new Error(`Could not find noun and verb for "${testOutput}".`);
+};
+
 module.exports = {
     intCodeComputer,
+    calculateIntCodeNounAndVerbForValue,
 };

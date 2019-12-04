@@ -1,4 +1,4 @@
-const { intCodeComputer } = require('./02-intcode');
+const { intCodeComputer, calculateIntCodeNounAndVerbForValue } = require('./02-intcode');
 const fs = require('fs');
 
 describe('IntCode', () => {
@@ -21,6 +21,22 @@ describe('IntCode', () => {
             codes[2] = 2;
 
             expect(intCodeComputer(codes)[0]).toEqual(5434663);
+            done();
+        });
+    });
+
+    test('finds noun and verb', (done) => {
+        fs.readFile(__dirname + '/inputs/intcodes-input.txt', (_err, data) => {
+            const codes = data
+                .toString()
+                .trim()
+                .split(',')
+                .map(i => parseInt(i));
+
+            expect(calculateIntCodeNounAndVerbForValue(codes, 19690720)).toEqual({
+                noun: 45,
+                verb: 59,
+            });
             done();
         });
     });
