@@ -53,7 +53,14 @@ const findIntersections = (firstWireCoords, secondWireCoords) => {
 };
 
 const closestCrossing = (firstWire, secondWire) => {
-    return null;
+    const intersections = findIntersections(
+        drawCoordinates(firstWire),
+        drawCoordinates(secondWire)
+    );
+
+    return Math.min(...intersections.map(([x, y]) => {
+        return Math.abs(y) + Math.abs(x);
+    }));
 };
 
 module.exports = {
