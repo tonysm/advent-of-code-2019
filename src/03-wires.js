@@ -37,13 +37,17 @@ const drawCoordinates = (wire) => {
     }, [[0, 0]]);
 };
 
-const findIntersections = (firstWireCoords, secondWireCoords) => {
-    return firstWireCoords.reduce((intersections, [x, y]) => {
+const findIntersections = (firstWireCoords, secondWireCoords, includeSumOfSteps = false) => {
+    return firstWireCoords.reduce((intersections, [x, y], index) => {
         if (!(x === 0 && y === 0)) {
             for (let i = 0; i < secondWireCoords.length; i++) {
                 const [secondX, secondY] = secondWireCoords[i];
                 if (x === secondX && y === secondY) {
-                    intersections.push([x, y]);
+                    if (includeSumOfSteps) {
+                        intersections.push([x, y, index + i]);
+                    } else {
+                        intersections.push([x, y]);
+                    }
                 }
             }
         }
@@ -63,8 +67,19 @@ const closestCrossing = (firstWire, secondWire) => {
     }));
 };
 
+const shortestCrossing = (firstWire, secondWire) => {
+    const intersections = findIntersections(
+        drawCoordinates(firstWire),
+        drawCoordinates(secondWire),
+        true
+    );
+
+    return Math.min(...intersections.map(([_x, _y, steps]) => steps));
+};
+
 module.exports = {
     drawCoordinates,
     findIntersections,
     closestCrossing,
+    shortestCrossing,
 };
