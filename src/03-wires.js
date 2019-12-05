@@ -37,11 +37,27 @@ const drawCoordinates = (wire) => {
     }, [[0, 0]]);
 };
 
+const findIntersections = (firstWireCoords, secondWireCoords) => {
+    return firstWireCoords.reduce((intersections, [x, y]) => {
+        if (!(x === 0 && y === 0)) {
+            for (let i = 0; i < secondWireCoords.length; i++) {
+                const [secondX, secondY] = secondWireCoords[i];
+                if (x === secondX && y === secondY) {
+                    intersections.push([x, y]);
+                }
+            }
+        }
+
+        return intersections;
+    }, []);
+};
+
 const closestCrossing = (firstWire, secondWire) => {
     return null;
 };
 
 module.exports = {
     drawCoordinates,
+    findIntersections,
     closestCrossing,
 };

@@ -1,4 +1,4 @@
-const { drawCoordinates, closestCrossing } = require('./03-wires');
+const { drawCoordinates, findIntersections } = require('./03-wires');
 
 describe('Touching Wires', () => {
     test('draws coordinates of a wire', () => {
@@ -29,10 +29,14 @@ describe('Touching Wires', () => {
             [2, -1],
         ]);
     });
-    // test('calculates the closest crossing point of 2 wires', () => {
-    //     expect(closestCrossing(
-    //         'R75,D30,R83,U83,L12,D49,R71,U7,L72',
-    //         'U62,R66,U55,R34,D71,R55,D58,R83'
-    //     )).toBe(159);
-    // });
+
+    test('find intersections', () => {
+        const firstWireCoords = [[0, 0], [0, 1], [0, 2]];
+        const secondWireCoords = [[0, 0], [0, -1], [0, 0], [1, 0], [0, 0], [0, 1], [0, 2]];
+
+        expect(findIntersections(firstWireCoords, secondWireCoords)).toEqual([
+            [0, 1],
+            [0, 2],
+        ]);
+    });
 });
