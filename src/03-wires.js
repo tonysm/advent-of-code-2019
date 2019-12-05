@@ -1,0 +1,47 @@
+const drawCoordinates = (wire) => {
+    const instructions = wire.split(',');
+    let positionPointer = {
+        x: 0,
+        y: 0,
+    };
+
+    return instructions.reduce((coords, op) => {
+        const startPosition = {...positionPointer};
+        const direction = op.substr(0, 1);
+        const steps = parseInt(op.substr(1));
+
+        switch (direction) {
+            case 'U':
+                do {
+                    coords.push([startPosition.x, ++positionPointer.y]);
+                } while (positionPointer.y < startPosition.y + steps);
+                break;
+            case 'R':
+                do {
+                    coords.push([++positionPointer.x, startPosition.y]);
+                } while (positionPointer.x < startPosition.x + steps);
+                break;
+            case 'D':
+                do {
+                    coords.push([startPosition.x, --positionPointer.y]);
+                } while (positionPointer.y > startPosition.y - steps);
+                break;
+            case 'L':
+                do {
+                    coords.push([--positionPointer.x, startPosition.y]);
+                } while (positionPointer.x > startPosition.x - steps);
+                break;
+        }
+
+        return coords;
+    }, [[0, 0]]);
+};
+
+const closestCrossing = (firstWire, secondWire) => {
+    return null;
+};
+
+module.exports = {
+    drawCoordinates,
+    closestCrossing,
+};
